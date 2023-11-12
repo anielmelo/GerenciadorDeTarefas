@@ -1,10 +1,11 @@
 package commands;
 
-import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
+import repository.TarefaRepository;
+import service.TarefaService;
 
 public class ListarTarefasCommand implements Command {
     @Override
     public void execute() {
-        
+        TarefaService tarefaService = new TarefaService(TarefaRepository.getTarefaBD());
     }
 }
