@@ -21,9 +21,11 @@ public class TarefaRepository {
         tarefaBD.add(tarefa);
     }
 
+    /*
     public List<Tarefa> getAll() {
         return tarefaBD;
-    }
+    } 
+     */
 
     public List<Tarefa> search(String opcaoBuscar) {
             if (opcaoBuscar == null || opcaoBuscar.isEmpty())
