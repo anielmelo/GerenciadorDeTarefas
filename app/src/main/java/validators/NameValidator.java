@@ -7,6 +7,6 @@ public class NameValidator implements Validator<String> {
     
     @Override
     public boolean validate(String data) {
-        return usuarioRepositorio.exists(data);
+        return usuarioRepositorio.existsUsuario(data);
     }
 }

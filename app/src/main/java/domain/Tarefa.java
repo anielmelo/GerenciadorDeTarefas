@@ -1,11 +1,7 @@
 package domain;
 
-import java.util.UUID;
-
 public class Tarefa {
     // atributos
-    private UUID id;
-    
     private String titulo;
     private String descricao;
     private String prioridade;
@@ -14,19 +10,13 @@ public class Tarefa {
     private boolean status;
     
     // construtor
-    public Tarefa(String titulo, String descricao, String prioridade, String categoria, String prazoDeConclusao,
-    boolean status) {
-        this.id = UUID.randomUUID();
+    public Tarefa(String titulo, String descricao, String prioridade, String categoria, String prazoDeConclusao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.prioridade = prioridade;
         this.categoria = categoria;
         this.prazoDeConclusao = prazoDeConclusao;
-        this.status = status;
-    }
-    
-    public UUID getId() {
-        return id;
+        this.status = false;
     }
 
     public String getTitulo() {

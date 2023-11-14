@@ -1,28 +1,55 @@
 package service;
 
+import java.util.List;
+
+import domain.Tarefa;
 import domain.Usuario;
 import repository.UsuarioRepository;
 
-import java.util.Optional;
-
 public class UsuarioService {
-    private UsuarioRepository usuarioRepositorio;
-    
-    public void entrar(String nome, String senha) {
-	Optional<Usuario> usuarioAtual = usuarioRepositorio.get(nome, senha);
-	if (usuarioAtual.isPresent()) {
-		tarefaRepositorio.setTarefaBD(usuario.getListaDeTarefa());
-		return;
-}
-}
+    private final UsuarioRepository repository;
+	
+	private Usuario usuarioAtual;
+	
+	public UsuarioService(UsuarioRepository usuarioRepositorio) {
+		this.repository = usuarioRepositorio;
+	}
+	public Usuario getUsuarioAtual() {
+		return usuarioAtual;
+	}
 
-public void cadastrar(String nome, String senha) {
-	usuarioRepositorio.create(new Usuario(nome, senha));
-}
+	public void setUsuarioAtual(Usuario usuarioAtual) {
+		this.usuarioAtual = usuarioAtual;
+	}
+	
+    public Usuario entrar(String nome, String senha) {
+		return repository.access(nome, senha);
+	}
 
-public boolean existe(String nome) {
-	return usuarioRepositorio.exists(nome);	// TALVEZ REMOVER
-}
+	public void cadastrar(String nome, String senha) {
+		repository.createUsuario(new Usuario(nome, senha));
+	}
 
-    
+	public void criarTarefa(String titulo, String descricao, String prioridade, String categoria, String prazo) {
+		repository.createTarefa(getUsuarioAtual().getNomeDeUsuario(), new Tarefa(titulo, descricao, prioridade, categoria, prazo));
+	}
+
+	public void listarTarefa() {
+		repository.getTarefas(getUsuarioAtual().getNomeDeUsuario());
+	}
+
+	public void atualizarTarefa(String titulo, String descricao, String prioridade, String categoria, String prazo) {
+		repository.updateTarefa(usuarioAtual.getNomeDeUsuario(), new Tarefa(titulo, descricao, prioridade, categoria, prazo));
+	}
+
+	public List<Tarefa> buscarTarefa(String termo) {
+		return repository.searchTarefa(usuarioAtual.getNomeDeUsuario(), termo);
+	}
+	
+	public List<Tarefa> filtrarTarefa(String prioridade) {
+		return null;
+	}
+
+	public void removerTarefa() {}
+
 }

@@ -1,4 +1,4 @@
-package tarefas.lab.controller;
+/*package tarefas.lab.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class Controlador {
             }
         }
     } 
-  */ 
+  
     // metodo cadastrar e validar cadastro de forma refatorada
     public void cadastrar(String nome, String senha) throws UsuarioExistenteException {
         Optional<Usuario> usuario = listaDeUsuario.stream().filter( u -> u.getNomeDeUsuario().equals(nome)).findFirst();
@@ -194,4 +194,4 @@ public class Controlador {
         }
     }
 
-}
+}*/

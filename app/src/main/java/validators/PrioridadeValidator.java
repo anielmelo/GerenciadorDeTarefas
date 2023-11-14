@@ -7,4 +7,3 @@ public class PrioridadeValidator implements Validator<String> {
         return (data.equals("1") || data.equals("2") || data.equals("3"));
     }
 }
-   
