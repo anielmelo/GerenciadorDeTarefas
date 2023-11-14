@@ -22,8 +22,11 @@ public class UsuarioService {
 		this.usuarioAtual = usuarioAtual;
 	}
 	
-    public Usuario entrar(String nome, String senha) {
-		return repository.access(nome, senha);
+    public boolean entrar(String nome, String senha) {
+		if (repository.access(nome, senha) == null) {
+			return false;
+		}
+		return true;
 	}
 
 	public void cadastrar(String nome, String senha) {

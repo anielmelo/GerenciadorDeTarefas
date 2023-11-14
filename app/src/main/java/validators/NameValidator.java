@@ -8,6 +8,6 @@ public class NameValidator implements Validator<String> {
     
     @Override
     public boolean validate(String data) {
-        return usuarioService.exists(data);
+        return !(usuarioService.exists(data));
     }
 }
