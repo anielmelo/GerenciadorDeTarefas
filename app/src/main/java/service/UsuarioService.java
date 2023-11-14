@@ -52,4 +52,8 @@ public class UsuarioService {
 
 	public void removerTarefa() {}
 
+	public boolean exists(String nome) {
+		return repository.existsUsuario(nome);
+	}
+
 }

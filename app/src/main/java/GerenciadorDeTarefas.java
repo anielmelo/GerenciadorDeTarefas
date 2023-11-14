@@ -9,9 +9,7 @@ public class GerenciadorDeTarefas {
     public static void main(String[] args) {
         UsuarioRepository dataService = UsuarioRepository.getInstance();
         CommandExecutor executor = new CommandExecutor();
-
-
-
+        
         executor.executeCommand(new LoginCommand());
         executor.executeCommand(new CadastrarUsuarioCommand());
     }
