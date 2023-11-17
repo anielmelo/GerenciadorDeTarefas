@@ -32,14 +32,15 @@ public class UsuarioRepository {
         return memory.getUsuario(nomeUsuario);
     }
 
+    public boolean existsUsuario(String nome) {
+        return memory.existsUsuario(nome);
+    }
+
     public void createUsuario(Usuario usuario) {
         memory.createUsuario(usuario);
     }
 
     // TAREFAS
-    public boolean existsUsuario(String nome) {
-        return memory.existsUsuario(nome);
-    }
 
     public List<Tarefa> getTarefas(String nomeUsuario) {
         return memory.getTarefas(nomeUsuario);

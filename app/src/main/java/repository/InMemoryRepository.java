@@ -24,8 +24,7 @@ public class InMemoryRepository {
     public void createUsuario(Usuario usuario) {
         usuarioBD.add(usuario);
     }
-
-    // TAREFAS
+    
     public boolean existsUsuario(String nome) {
         if (usuarioBD.isEmpty()) {
             return false;
@@ -33,6 +32,7 @@ public class InMemoryRepository {
         return usuarioBD.stream().anyMatch(usuario -> usuario.getNomeDeUsuario().equals(nome));
 
     }
+    // TAREFAS
 
     public List<Tarefa> getTarefas(String nomeUsuario) {
         return getUsuario(nomeUsuario).getListaDeTarefa();

@@ -11,14 +11,18 @@ public class CadastrarUsuarioCommand implements Command {
     public void execute() {
         UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
         System.out.println("=========================");
-        ValidationContext<String> strValidaNome = new ValidationContext<>(new NameValidator());
-        String nome = strValidaNome.getValidValue("Nome: ", "Usuário já cadastrado.", String.class);
+        ValidationContext<String> strValidaNome = new ValidationContext<>(new NonEmptyValidator());
+        String nome = strValidaNome.getValidValue("Nome: ", "Digite um nome para usuário", String.class);
 
-        ValidationContext<String> strValidaSenha = new ValidationContext<>(new NonEmptyValidator());
-        String senha = strValidaSenha.getValidValue("Senha: ", "Caixa de entrada vazia, digite a senha", String.class);
-
+        if (usuarioService.exists(nome)) {
+            System.out.println("Usuário já cadastrado.");
+        }else {
+            ValidationContext<String> strValidaSenha = new ValidationContext<>(new NonEmptyValidator());
+            String senha = strValidaSenha.getValidValue("Senha: ", "Caixa de entrada vazia, digite a senha", String.class);
+            usuarioService.cadastrar(nome, senha);
+            System.out.println("Usuário cadastrado com sucesso.");
+        }
         System.out.println("=========================");
 
-        usuarioService.cadastrar(nome, senha);
     }
 }

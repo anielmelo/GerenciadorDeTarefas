@@ -26,6 +26,7 @@ public class UsuarioService {
 		if (repository.access(nome, senha) == null) {
 			return false;
 		}
+		this.setUsuarioAtual(repository.access(nome, senha));
 		return true;
 	}
 
