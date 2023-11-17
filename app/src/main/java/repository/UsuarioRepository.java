@@ -53,8 +53,8 @@ public class UsuarioRepository {
         memory.updateTarefa(nomeUsuario, tarefa);
     }
     
-    public void removeTarefa(String nomeUsuario, int index) { 
-        memory.removeTarefa(nomeUsuario, index);
+    public void removeTarefa(String nomeUsuario, Tarefa tarefa) { 
+        memory.removeTarefa(nomeUsuario, tarefa);
     }
     
     public List<Tarefa> searchTarefa(String nomeUsuario, String termo) {

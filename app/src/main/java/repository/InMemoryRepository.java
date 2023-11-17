@@ -8,7 +8,7 @@ import domain.Tarefa;
 import domain.Usuario;
 
 public class InMemoryRepository {
-    private List<Usuario> usuarioBD = new ArrayList<>();
+    protected List<Usuario> usuarioBD = new ArrayList<>();
         
     // USUÁRIO
     public Usuario access(String nome, String senha) {
@@ -47,8 +47,8 @@ public class InMemoryRepository {
         getTarefas(nomeUsuario).set(index, tarefa);
     }
     
-    public void removeTarefa(String nomeUsuario, int index) { // depois rever
-        getTarefas(nomeUsuario).remove(index);
+    public void removeTarefa(String nomeUsuario, Tarefa tarefa) {
+        getTarefas(nomeUsuario).remove(tarefa);
     }
     
     public List<Tarefa> searchTarefa(String nomeUsuario, String termo) {

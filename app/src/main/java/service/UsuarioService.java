@@ -9,7 +9,7 @@ import repository.UsuarioRepository;
 public class UsuarioService {
     private final UsuarioRepository repository;
 	
-	private Usuario usuarioAtual;
+	private static Usuario usuarioAtual;
 	
 	public UsuarioService(UsuarioRepository usuarioRepositorio) {
 		this.repository = usuarioRepositorio;
@@ -19,14 +19,17 @@ public class UsuarioService {
 	}
 
 	public void setUsuarioAtual(Usuario usuarioAtual) {
-		this.usuarioAtual = usuarioAtual;
+		UsuarioService.usuarioAtual = usuarioAtual;
 	}
 	
-    public boolean entrar(String nome, String senha) {
-		if (repository.access(nome, senha) == null) {
-			return false;
+    public void entrar(String nome, String senha) {
+		if (repository.access(nome, senha) != null) {
+			setUsuarioAtual(repository.getUsuario(nome));
 		}
-		return true;
+	}
+
+	public void sair() {
+		setUsuarioAtual(null);
 	}
 
 	public void cadastrar(String nome, String senha) {
@@ -37,8 +40,8 @@ public class UsuarioService {
 		repository.createTarefa(getUsuarioAtual().getNomeDeUsuario(), new Tarefa(titulo, descricao, prioridade, categoria, prazo));
 	}
 
-	public void listarTarefa() {
-		repository.getTarefas(getUsuarioAtual().getNomeDeUsuario());
+	public List<Tarefa> listarTarefa() {
+		return repository.getTarefas(getUsuarioAtual().getNomeDeUsuario());
 	}
 
 	public void atualizarTarefa(String titulo, String descricao, String prioridade, String categoria, String prazo) {
@@ -53,7 +56,9 @@ public class UsuarioService {
 		return null;
 	}
 
-	public void removerTarefa() {}
+	public void removerTarefa(Tarefa tarefa) {
+		repository.removeTarefa(getUsuarioAtual().getNomeDeUsuario(), tarefa);
+	}
 
 	public boolean exists(String nome) {
 		return repository.existsUsuario(nome);
