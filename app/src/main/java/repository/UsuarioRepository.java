@@ -60,4 +60,8 @@ public class UsuarioRepository {
     public List<Tarefa> searchTarefa(String nomeUsuario, String termo) {
         return memory.searchTarefa(nomeUsuario, termo);
     }
+
+    public List<Tarefa> filterTarefa(String nomeUsuario, String prioridade) {
+        return memory.filterTarefa(nomeUsuario, prioridade);
+    }
 }

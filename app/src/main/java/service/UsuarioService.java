@@ -8,7 +8,6 @@ import repository.UsuarioRepository;
 
 public class UsuarioService {
     private final UsuarioRepository repository;
-	
 	private static Usuario usuarioAtual;
 	
 	public UsuarioService(UsuarioRepository usuarioRepositorio) {
@@ -22,10 +21,11 @@ public class UsuarioService {
 		UsuarioService.usuarioAtual = usuarioAtual;
 	}
 	
-    public void entrar(String nome, String senha) {
+    public Usuario entrar(String nome, String senha) {
 		if (repository.access(nome, senha) != null) {
 			setUsuarioAtual(repository.getUsuario(nome));
 		}
+		return getUsuarioAtual();
 	}
 
 	public void sair() {
@@ -53,7 +53,7 @@ public class UsuarioService {
 	}
 	
 	public List<Tarefa> filtrarTarefa(String prioridade) {
-		return null;
+		return repository.filterTarefa(getUsuarioAtual().getNomeDeUsuario(), prioridade);
 	}
 
 	public void removerTarefa(Tarefa tarefa) {

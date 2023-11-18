@@ -21,20 +21,24 @@ public class ExcluirTarefaCommand implements Command {
         List<Tarefa> listaDeTarefasBuscadas = usuarioService.buscarTarefa(termo);
         
         if (!listaDeTarefasBuscadas.isEmpty()) {
-            int index = 1;
+            int index = 0;
             for (Tarefa tarefa : listaDeTarefasBuscadas) {
-                System.out.printf("%d - %s", index, tarefa.getTitulo()); // ALTERAR PARA UM PRINT DE TAREFA MAIS COMPLETO
-                index++;
+                Object[] params = new String[] {tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getPrioridade(), tarefa.getCategoria(), tarefa.getPrazoDeConclusao(), tarefa.getStatus()}; 
+                System.out.printf("================ [TAREFA %d] ===============%n", ++index);
+                System.out.printf("""
+                        TÍTULO: %s\nDESCRIÇÃO: %s\nPRIORIDADE: %s\nCATEGORIA: %s\nPRAZO: %s\nSTATUS DE CONCLUSÃO: %s
+                        """, params);
+                System.out.printf("============================================%n");
+                System.out.println();
             }
+
             ValidationContext<Integer> intValidationContext = new ValidationContext<>(new IndexValidator(1, index));
-            int indexInformado = intValidationContext.getValidValue("Digite o indice da tarefa para remover: ", String.format("Digite um indice válido (1, %d)", index), Integer.class);
+            int indexInformado = intValidationContext.getValidValue("\nDigite o indice da tarefa para remover: ", String.format("Digite um indice válido (1, %d)", index), Integer.class);
             
             usuarioService.removerTarefa(listaDeTarefasBuscadas.get(indexInformado - 1));
         } else {
             System.out.println("Nenhuma tarefa encontrada.");
         }
-
-
     }
     
 }

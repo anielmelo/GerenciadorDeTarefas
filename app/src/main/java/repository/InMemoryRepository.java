@@ -55,4 +55,9 @@ public class InMemoryRepository {
         return getTarefas(nomeUsuario).stream().filter(lista -> 
         lista.getTitulo().toLowerCase().contains(termo.toLowerCase()) || lista.getDescricao().contains(termo.toLowerCase())).toList();
     }
+
+    public List<Tarefa> filterTarefa(String nomeUsuario, String prioridade) {
+        return getTarefas(nomeUsuario).stream().filter(lista -> 
+        lista.getPrioridade().equals(prioridade)).toList();
+    }
 }
