@@ -1,7 +1,7 @@
 package domain;
 
 public class Tarefa {
-    // atributos
+    
     private String titulo;
     private String descricao;
     private String prioridade;
@@ -9,7 +9,6 @@ public class Tarefa {
     private String prazoDeConclusao;
     private boolean status;
     
-    // construtor
     public Tarefa(String titulo, String descricao, String prioridade, String categoria, String prazoDeConclusao) {
         this.titulo = titulo;
         this.descricao = descricao;

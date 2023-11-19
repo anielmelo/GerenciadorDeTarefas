@@ -24,6 +24,7 @@ public class UsuarioRepository {
         this.memory = memory;
     }
 
+    // USUÁRIO
     public Usuario access(String nome, String senha) {
         return memory.access(nome, senha);
     }
@@ -36,11 +37,11 @@ public class UsuarioRepository {
         memory.createUsuario(usuario);
     }
 
-    // TAREFAS
     public boolean existsUsuario(String nome) {
         return memory.existsUsuario(nome);
     }
-
+    
+    // TAREFAS
     public List<Tarefa> getTarefas(String nomeUsuario) {
         return memory.getTarefas(nomeUsuario);
     }

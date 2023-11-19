@@ -25,7 +25,7 @@ public class EditarTarefaCommand implements Command {
         
         if (!listaDeTarefasBuscadas.isEmpty()) {
             int index = 0;
-            for (Tarefa tarefa : usuarioService.listarTarefa()) {
+            for (Tarefa tarefa : listaDeTarefasBuscadas) {
                 Object[] params = new String[] {tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getPrioridade(), tarefa.getCategoria(), tarefa.getPrazoDeConclusao(), tarefa.getStatus()}; 
                 System.out.printf("================ [TAREFA %d] ===============%n", ++index);
                 System.out.printf("""
@@ -88,7 +88,7 @@ public class EditarTarefaCommand implements Command {
             }
 
             usuarioService.atualizarTarefa(tarefaEdit.getTitulo(), tarefaEdit.getDescricao(), tarefaEdit.getPrioridade(), tarefaEdit.getCategoria(), tarefaEdit.getPrazoDeConclusao());
-            System.out.println("Tarefa editada com sucesso!");
+            System.out.println("\nTarefa editada com sucesso.");
         } else {
             System.out.println("Nenhuma tarefa encontrada.");
         }

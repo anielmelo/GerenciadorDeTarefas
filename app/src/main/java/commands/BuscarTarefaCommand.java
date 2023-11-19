@@ -33,5 +33,4 @@ public class BuscarTarefaCommand implements Command {
             System.out.println("Nenhuma tarefa encontrada.");
         }
     }
-    
 }

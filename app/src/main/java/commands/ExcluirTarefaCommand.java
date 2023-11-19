@@ -36,6 +36,7 @@ public class ExcluirTarefaCommand implements Command {
             int indexInformado = intValidationContext.getValidValue("\nDigite o indice da tarefa para remover: ", String.format("Digite um indice válido (1, %d)", index), Integer.class);
             
             usuarioService.removerTarefa(listaDeTarefasBuscadas.get(indexInformado - 1));
+            System.out.printf("\nTarefa %d excluída.\n", indexInformado);
         } else {
             System.out.println("Nenhuma tarefa encontrada.");
         }

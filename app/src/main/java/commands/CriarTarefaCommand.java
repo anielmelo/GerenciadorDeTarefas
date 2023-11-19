@@ -25,7 +25,7 @@ public class CriarTarefaCommand implements Command {
         String categoria = strValidationContext.getValidValue("Categoria: ", "Categoria não pode ser vazio.", String.class);
         
         strValidationContext.setValidator(new DateValidator());
-        String prazo = strValidationContext.getValidValue("Prazo [dd/mm/aaaa]: ", "Digite uma data válida. (dd/mm/aaaa)", String.class);
+        String prazo = strValidationContext.getValidValue("Prazo [dd/mm/aaaa]: ", "Digite uma data válida. [dd/mm/aaaa]", String.class);
 
         switch (prioridade) {
             case "1":
@@ -42,6 +42,6 @@ public class CriarTarefaCommand implements Command {
         }
 
         usuarioService.criarTarefa(titulo, descricao, prioridade, categoria, prazo);
+        System.out.println("\nTarefa criada com sucesso.");
     }
-    
 }

@@ -26,6 +26,8 @@ public class LoginCommand implements Command {
                 return;
             }
             System.out.println("Usuário não encontrado.");
+        } else {
+            System.out.printf("\nBem vindo, %s!\n", nome);
         }
 
     }

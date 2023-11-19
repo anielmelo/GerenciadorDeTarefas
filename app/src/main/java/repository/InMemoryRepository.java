@@ -25,15 +25,15 @@ public class InMemoryRepository {
         usuarioBD.add(usuario);
     }
 
-    // TAREFAS
     public boolean existsUsuario(String nome) {
         if (usuarioBD.isEmpty()) {
             return false;
         }
         return usuarioBD.stream().anyMatch(usuario -> usuario.getNomeDeUsuario().equals(nome));
-
+        
     }
-
+    
+    // TAREFAS
     public List<Tarefa> getTarefas(String nomeUsuario) {
         return getUsuario(nomeUsuario).getListaDeTarefa();
     }

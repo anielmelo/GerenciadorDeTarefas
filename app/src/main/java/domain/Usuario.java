@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
-    // atributos
+
     private String nomeDeUsuario;
     private String senhaDeUsuario;
     private List<Tarefa> listaDeTarefa;
     
-    //construtor
     public Usuario(String nomeDeUsuario, String senhaDeUsuario) {
         this.nomeDeUsuario = nomeDeUsuario;
         this.senhaDeUsuario = senhaDeUsuario;
         this.listaDeTarefa = new ArrayList<>();
     }
 
-    //métodos
     public String getNomeDeUsuario() {
         return nomeDeUsuario;
     }

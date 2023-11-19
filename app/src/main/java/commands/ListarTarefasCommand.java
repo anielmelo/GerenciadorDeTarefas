@@ -10,14 +10,18 @@ public class ListarTarefasCommand implements Command {
         UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
 
         int index = 0;
-        for (Tarefa tarefa : usuarioService.listarTarefa()) {
-            Object[] params = new String[] {tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getPrioridade(), tarefa.getCategoria(), tarefa.getPrazoDeConclusao(), tarefa.getStatus()}; 
-            System.out.printf("================ [TAREFA %d] ===============%n", ++index);
-            System.out.printf("""
-                    TÍTULO: %s\nDESCRIÇÃO: %s\nPRIORIDADE: %s\nCATEGORIA: %s\nPRAZO: %s\nSTATUS DE CONCLUSÃO: %s
-                    """, params);
-            System.out.printf("============================================%n");
-            System.out.println();
+        if (!usuarioService.listarTarefa().isEmpty()) {
+            for (Tarefa tarefa : usuarioService.listarTarefa()) {
+                Object[] params = new String[] {tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getPrioridade(), tarefa.getCategoria(), tarefa.getPrazoDeConclusao(), tarefa.getStatus()}; 
+                System.out.printf("================ [TAREFA %d] ===============%n", ++index);
+                System.out.printf("""
+                        TÍTULO: %s\nDESCRIÇÃO: %s\nPRIORIDADE: %s\nCATEGORIA: %s\nPRAZO: %s\nSTATUS DE CONCLUSÃO: %s
+                        """, params);
+                System.out.printf("============================================%n");
+                System.out.println();
+            }
+        } else {
+            System.out.println("A lista de tarefas está vazia.");
         }
     }
 }

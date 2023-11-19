@@ -23,5 +23,6 @@ public class CadastrarUsuarioCommand implements Command {
         }
 
         usuarioService.cadastrar(nome, senha);
+        System.out.println("\nUsuário cadastrado com sucesso.");
     }
 }
