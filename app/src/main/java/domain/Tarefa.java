@@ -1,7 +1,12 @@
 package domain;
 
-public class Tarefa {
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.UUID;
+
+public class Tarefa implements Serializable {
     
+    private UUID id;
     private String titulo;
     private String descricao;
     private String prioridade;
@@ -10,12 +15,27 @@ public class Tarefa {
     private boolean status;
     
     public Tarefa(String titulo, String descricao, String prioridade, String categoria, String prazoDeConclusao) {
+        this.id = UUID.randomUUID();
         this.titulo = titulo;
         this.descricao = descricao;
         this.prioridade = prioridade;
         this.categoria = categoria;
         this.prazoDeConclusao = prazoDeConclusao;
         this.status = false;
+    }
+    
+    public Tarefa(UUID id, String titulo, String descricao, String prioridade, String categoria, String prazoDeConclusao) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.prioridade = prioridade;
+        this.categoria = categoria;
+        this.prazoDeConclusao = prazoDeConclusao;
+        this.status = false;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getTitulo() {
@@ -62,17 +82,28 @@ public class Tarefa {
         return status;
     }
 
-    public String getStatus() {
-        String statusAtividade = "";
-        if (this.status) {
-            statusAtividade = "Concluída";
-        } else {
-            statusAtividade = "Pendente";
-        }
-        return statusAtividade;
-    }    
-
     public void setStatus(boolean status) {
         this.status = status;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Tarefa tarefa)) return false;
+        return Objects.equals(getId(), tarefa.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    public String toString() {
+        return String.format("TÍTULO: %s\n" + //
+                "DESCRIÇÃO: %s\n" + //
+                "PRIORIDADE: %s\n" + //
+                "CATEGORIA: %s\n" + //
+                "PRAZO: %s\n" + //
+                "STATUS DE CONCLUSÃO: %s", getTitulo(), getDescricao(), getPrioridade(), getCategoria(), getPrazoDeConclusao(), isStatus()?"Concluída":"Pendente");
+            }
 }

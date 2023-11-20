@@ -3,6 +3,7 @@ package repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import domain.Tarefa;
 import domain.Usuario;
@@ -38,6 +39,11 @@ public class InMemoryRepository {
         return getUsuario(nomeUsuario).getListaDeTarefa();
     }
 
+    public Tarefa getTarefaEditavel(String nomeUsuario, UUID id) {
+		Optional<Tarefa> tarefaEdit =  getTarefas(nomeUsuario).stream().filter(t -> t.getId().equals(id)).findFirst();
+        return tarefaEdit.isPresent() ? tarefaEdit.get() : null;
+	}
+
     public void createTarefa(String nomeUsuario, Tarefa tarefa) {
         getTarefas(nomeUsuario).add(tarefa);
     }
@@ -49,6 +55,12 @@ public class InMemoryRepository {
     
     public void removeTarefa(String nomeUsuario, Tarefa tarefa) {
         getTarefas(nomeUsuario).remove(tarefa);
+    }
+
+    public void updateStatus(String nomeUsuario, Tarefa tarefa) {
+        int index = getTarefas(nomeUsuario).indexOf(tarefa);
+        Tarefa tarefaTemp = getTarefas(nomeUsuario).get(index);
+        tarefaTemp.setStatus(!(tarefaTemp.isStatus()));
     }
     
     public List<Tarefa> searchTarefa(String nomeUsuario, String termo) {

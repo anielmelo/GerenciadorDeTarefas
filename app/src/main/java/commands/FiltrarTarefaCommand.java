@@ -36,11 +36,8 @@ public class FiltrarTarefaCommand implements Command {
         if (!listaDeTarefasBuscadas.isEmpty()) {
             int index = 0;
             for (Tarefa tarefa : listaDeTarefasBuscadas) {
-                Object[] params = new String[] {tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getPrioridade(), tarefa.getCategoria(), tarefa.getPrazoDeConclusao(), tarefa.getStatus()}; 
                 System.out.printf("================ [TAREFA %d] ===============%n", ++index);
-                System.out.printf("""
-                        TÍTULO: %s\nDESCRIÇÃO: %s\nPRIORIDADE: %s\nCATEGORIA: %s\nPRAZO: %s\nSTATUS DE CONCLUSÃO: %s
-                        """, params);
+                System.out.println(tarefa.toString());
                 System.out.printf("============================================\n");
             }
         } else {

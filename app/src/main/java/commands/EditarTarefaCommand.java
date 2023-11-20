@@ -26,16 +26,13 @@ public class EditarTarefaCommand implements Command {
         if (!listaDeTarefasBuscadas.isEmpty()) {
             int index = 0;
             for (Tarefa tarefa : listaDeTarefasBuscadas) {
-                Object[] params = new String[] {tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getPrioridade(), tarefa.getCategoria(), tarefa.getPrazoDeConclusao(), tarefa.getStatus()}; 
                 System.out.printf("================ [TAREFA %d] ===============%n", ++index);
-                System.out.printf("""
-                        TÍTULO: %s\nDESCRIÇÃO: %s\nPRIORIDADE: %s\nCATEGORIA: %s\nPRAZO: %s\nSTATUS DE CONCLUSÃO: %s
-                        """, params);
+                System.out.println(tarefa.toString());
                 System.out.printf("============================================\n");
             }
 
             ValidationContext<Integer> intValidationContext = new ValidationContext<>(new IndexValidator(1, index));
-            int indexInformado = intValidationContext.getValidValue("\nDigite o indice da tarefa para remover: ", String.format("Digite um indice válido (1, %d)", index), Integer.class);
+            int indexInformado = intValidationContext.getValidValue("\nDigite o indice da tarefa para editar: ", String.format("Digite um indice válido (1, %d)", index), Integer.class);
             
             Tarefa tarefaEdit = listaDeTarefasBuscadas.get(indexInformado - 1);
 
@@ -87,7 +84,7 @@ public class EditarTarefaCommand implements Command {
                 tarefaEdit.setPrazoDeConclusao(prazoEdit);
             }
 
-            usuarioService.atualizarTarefa(tarefaEdit.getTitulo(), tarefaEdit.getDescricao(), tarefaEdit.getPrioridade(), tarefaEdit.getCategoria(), tarefaEdit.getPrazoDeConclusao());
+            usuarioService.atualizarTarefa(tarefaEdit.getId(), tarefaEdit.getTitulo(), tarefaEdit.getDescricao(), tarefaEdit.getPrioridade(), tarefaEdit.getCategoria(), tarefaEdit.getPrazoDeConclusao());
             System.out.println("\nTarefa editada com sucesso.");
         } else {
             System.out.println("Nenhuma tarefa encontrada.");

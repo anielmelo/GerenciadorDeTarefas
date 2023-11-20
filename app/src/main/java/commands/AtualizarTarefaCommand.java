@@ -9,8 +9,7 @@ import validators.IndexValidator;
 import validators.NonEmptyValidator;
 import validators.ValidationContext;
 
-public class ExcluirTarefaCommand implements Command {
-
+public class AtualizarTarefaCommand implements Command {
     @Override
     public void execute() {
         UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
@@ -29,13 +28,14 @@ public class ExcluirTarefaCommand implements Command {
             }
 
             ValidationContext<Integer> intValidationContext = new ValidationContext<>(new IndexValidator(1, index));
-            int indexInformado = intValidationContext.getValidValue("\nDigite o indice da tarefa para remover: ", String.format("Digite um indice válido (1, %d)", index), Integer.class);
+            int indexInformado = intValidationContext.getValidValue("\nDigite o indice da tarefa para atualizar o status: ", String.format("Digite um indice válido (1, %d)", index), Integer.class);
             
-            usuarioService.removerTarefa(listaDeTarefasBuscadas.get(indexInformado - 1));
-            System.out.printf("\nTarefa %d excluída.\n", indexInformado);
+            usuarioService.atualizarStatus(listaDeTarefasBuscadas.get(indexInformado - 1));
+            System.out.println("\nStatus da tarefa atualizado.");
         } else {
             System.out.println("Nenhuma tarefa encontrada.");
+
         }
+
     }
-    
 }

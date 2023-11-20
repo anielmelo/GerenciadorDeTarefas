@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import commands.AtualizarTarefaCommand;
 import commands.BuscarTarefaCommand;
 import commands.CadastrarUsuarioCommand;
 import commands.CommandExecutor;
@@ -13,6 +14,7 @@ import repository.UsuarioRepository;
 import service.UsuarioService;
 
 public class GerenciadorDeTarefaConsole {
+    private static boolean running = true;
 
     public static void mostrarMenuDeLogin() {
         UsuarioService service = new UsuarioService(UsuarioRepository.getInstance());
@@ -20,8 +22,9 @@ public class GerenciadorDeTarefaConsole {
         
         Scanner leitor = new Scanner(System.in);
         int opcao = 0;
-        
-        while(opcao != 3) {
+        boolean autentica = true;
+
+        while(autentica) {
             System.out.println("\nMENU DE LOGIN");
             System.out.println("[1] - Entrar");
             System.out.println("[2] - Cadastro");
@@ -42,6 +45,8 @@ public class GerenciadorDeTarefaConsole {
                     break;
                 case 3:
                     System.out.println("Saindo...");
+                    autentica = false;
+                    running = false;
                     break;
                 default:
                     System.out.println("Opção inválida.");
@@ -58,16 +63,18 @@ public class GerenciadorDeTarefaConsole {
         Scanner leitorTarefa = new Scanner(System.in);
         int opcaoTarefa = 0;
 
-        while (opcaoTarefa != 7) {
+        while (opcaoTarefa != 8) {
             System.out.println("\nMENU DE TAREFAS");
             System.out.println("[1] Criar");
             System.out.println("[2] Listar");
             System.out.println("[3] Filtrar");
             System.out.println("[4] Buscar");
             System.out.println("[5] Editar");
-            System.out.println("[6] Excluir");
-            System.out.println("[7] Sair");
+            System.out.println("[6] Atualizar");
+            System.out.println("[7] Excluir");
+            System.out.println("[8] Sair");
 
+            System.out.print("Digite uma opção: ");
             opcaoTarefa = leitorTarefa.nextInt();
 
             switch (opcaoTarefa) {
@@ -87,12 +94,14 @@ public class GerenciadorDeTarefaConsole {
                     executor.executeCommand(new EditarTarefaCommand());
                     break;
                 case 6:
-                    executor.executeCommand(new ExcluirTarefaCommand());
+                    executor.executeCommand(new AtualizarTarefaCommand());
                     break;
                 case 7:
+                    executor.executeCommand(new ExcluirTarefaCommand());
+                    break;
+                case 8:
                     System.out.println("Saindo...");
                     service.sair();
-                    mostrarMenuDeLogin();
                     break;
                 default:
                     System.out.println("Opção inválida.");
@@ -102,6 +111,8 @@ public class GerenciadorDeTarefaConsole {
     }
     
     public static void main(String[] args) {
-        mostrarMenuDeLogin();
+        while (running) {
+            mostrarMenuDeLogin();
+        }
     }
 }

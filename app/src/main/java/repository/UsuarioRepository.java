@@ -1,6 +1,7 @@
 package repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import domain.Tarefa;
 import domain.Usuario;
@@ -44,6 +45,14 @@ public class UsuarioRepository {
     // TAREFAS
     public List<Tarefa> getTarefas(String nomeUsuario) {
         return memory.getTarefas(nomeUsuario);
+    }
+
+    public Tarefa getTarefaEditavel(String nomeUsuario, UUID id) {
+        return memory.getTarefaEditavel(nomeUsuario, id);
+    }
+
+    public void updateStatus(String nomeUsuario, Tarefa tarefa) {
+        memory.updateStatus(nomeUsuario, tarefa);
     }
 
     public void createTarefa(String nomeUsuario, Tarefa tarefa) {

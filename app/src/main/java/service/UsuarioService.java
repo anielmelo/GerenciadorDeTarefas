@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.UUID;
 
 import domain.Tarefa;
 import domain.Usuario;
@@ -40,12 +41,20 @@ public class UsuarioService {
 		repository.createTarefa(getUsuarioAtual().getNomeDeUsuario(), new Tarefa(titulo, descricao, prioridade, categoria, prazo));
 	}
 
+	public Tarefa getTarefaID(UUID id) {
+		return repository.getTarefaEditavel(getUsuarioAtual().getNomeDeUsuario(), id);
+	}
+
 	public List<Tarefa> listarTarefa() {
 		return repository.getTarefas(getUsuarioAtual().getNomeDeUsuario());
 	}
 
-	public void atualizarTarefa(String titulo, String descricao, String prioridade, String categoria, String prazo) {
-		repository.updateTarefa(usuarioAtual.getNomeDeUsuario(), new Tarefa(titulo, descricao, prioridade, categoria, prazo));
+	public void atualizarStatus(Tarefa tarefa) {
+		repository.updateStatus(getUsuarioAtual().getNomeDeUsuario(), tarefa);
+	}
+
+	public void atualizarTarefa(UUID id, String titulo, String descricao, String prioridade, String categoria, String prazo) {
+		repository.updateTarefa(usuarioAtual.getNomeDeUsuario(), new Tarefa(getTarefaID(id).getId(), titulo, descricao, prioridade, categoria, prazo));
 	}
 
 	public List<Tarefa> buscarTarefa(String termo) {
