@@ -27,7 +27,7 @@ public class LoginGUICommand implements Command {
     @Override
     public void execute() {
         String nomeStr = txtNomeUsuario.getText();
-        String senhaStr = txtSenhaUsuario.getSelectedText();
+        String senhaStr = new String(txtSenhaUsuario.getPassword());
 
         GUITextValidator nomeValidator = new GUITextValidator(new NonEmptyValidator());
         GUITextValidator senhaValidator = new GUITextValidator(new NonEmptyValidator());
@@ -43,7 +43,7 @@ public class LoginGUICommand implements Command {
                 TarefaWindow tarefa = new TarefaWindow();
                 tarefa.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(txtNomeUsuario.getParent(), "Usuário não caadastrado!");
+                JOptionPane.showMessageDialog(txtNomeUsuario.getParent(), "Usuário não cadastrado!");
             }
         }
     }

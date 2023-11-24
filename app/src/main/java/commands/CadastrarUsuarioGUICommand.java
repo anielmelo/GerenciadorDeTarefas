@@ -22,7 +22,7 @@ public class CadastrarUsuarioGUICommand implements Command {
     @Override
     public void execute() {
         String nomeStr = txtNomeUsuario.getText();
-        String senhaStr = txtSenhaUsuario.getSelectedText();
+        String senhaStr = new String(txtSenhaUsuario.getPassword());
 
         GUITextValidator nomeValidator = new GUITextValidator(new NonEmptyValidator());
         GUITextValidator senhaValidator = new GUITextValidator(new NonEmptyValidator());
