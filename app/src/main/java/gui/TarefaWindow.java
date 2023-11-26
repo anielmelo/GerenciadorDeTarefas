@@ -1,20 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package gui;
 
-/**
- *
- * @author aniel
- */
+import domain.Tarefa;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import repository.UsuarioRepository;
+import service.UsuarioService;
+
 public class TarefaWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TarefaWindow
-     */
+    UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
+    
     public TarefaWindow() {
         initComponents();
+        initTable();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -26,18 +25,22 @@ public class TarefaWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableTarefa = new javax.swing.JTable();
         btnCriar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnFiltrar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+
+        jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableTarefa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -53,7 +56,7 @@ public class TarefaWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableTarefa);
 
         btnCriar.setText("Criar");
         btnCriar.addActionListener(new java.awt.event.ActionListener() {
@@ -72,6 +75,13 @@ public class TarefaWindow extends javax.swing.JFrame {
 
         btnExcluir.setText("Excluir");
 
+        jButton1.setText("Atualizar tabela");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,19 +89,23 @@ public class TarefaWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnCriar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFiltrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAtualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExcluir)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCriar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnFiltrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAtualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnExcluir)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -105,20 +119,40 @@ public class TarefaWindow extends javax.swing.JFrame {
                     .addComponent(btnBuscar)
                     .addComponent(btnAtualizar)
                     .addComponent(btnExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initTable() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Titulo");
+        modelo.addColumn("Descrição");
+        modelo.addColumn("Prioridade");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Prazo");
+        modelo.addColumn("Status");
+        List<Tarefa> tarefas = usuarioService.listarTarefa();
+        for (int i = 0; tarefas.size() > i; i++) {
+            modelo.addRow(new String[] {tarefas.get(i).getTitulo(), tarefas.get(i).getDescricao(), tarefas.get(i).getPrioridade(), tarefas.get(i).getCategoria(), tarefas.get(i).getPrazoDeConclusao(), tarefas.get(i).isStatus()?"Concluída":"Pendente"});
+        }
+        tableTarefa.setModel(modelo);
+    }
+    
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
-        // TODO add your handling code here:
+        CriarTarefaWindow criarTarefa = new CriarTarefaWindow();
+        criarTarefa.setVisible(true);
     }//GEN-LAST:event_btnCriarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        initTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -158,7 +192,9 @@ public class TarefaWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTable tableTarefa;
     // End of variables declaration//GEN-END:variables
 }
