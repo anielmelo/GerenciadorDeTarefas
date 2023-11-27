@@ -1,7 +1,10 @@
 package gui;
 
+import commands.CommandExecutor;
+import commands.ExcluirTarefaGUICommand;
 import domain.Tarefa;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import repository.UsuarioRepository;
 import service.UsuarioService;
@@ -9,6 +12,7 @@ import service.UsuarioService;
 public class TarefaWindow extends javax.swing.JFrame {
 
     UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
+    CommandExecutor executor = new CommandExecutor();
     
     public TarefaWindow() {
         initComponents();
@@ -74,6 +78,11 @@ public class TarefaWindow extends javax.swing.JFrame {
         btnAtualizar.setText("Atualizar");
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Atualizar tabela");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +150,7 @@ public class TarefaWindow extends javax.swing.JFrame {
             modelo.addRow(new String[] {tarefas.get(i).getTitulo(), tarefas.get(i).getDescricao(), tarefas.get(i).getPrioridade(), tarefas.get(i).getCategoria(), tarefas.get(i).getPrazoDeConclusao(), tarefas.get(i).isStatus()?"Concluída":"Pendente"});
         }
         tableTarefa.setModel(modelo);
+        tableTarefa.setDefaultEditor(Object.class, null);
     }
     
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
@@ -152,7 +162,20 @@ public class TarefaWindow extends javax.swing.JFrame {
         initTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        executor.executeCommand(new ExcluirTarefaGUICommand(tableTarefa));
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
+    public int seleciona() {
+        int indice = -1;
+        try {
+            indice = tableTarefa.getSelectedRow();
+        } catch(NullPointerException e) {
+            JOptionPane.showMessageDialog(btnExcluir.getParent(), e);
+        }
+        return indice;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
