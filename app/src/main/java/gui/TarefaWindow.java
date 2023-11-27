@@ -1,5 +1,6 @@
 package gui;
 
+import commands.AtualizarStatusTarefaGUICommand;
 import commands.CommandExecutor;
 import commands.ExcluirTarefaGUICommand;
 import domain.Tarefa;
@@ -80,6 +81,11 @@ public class TarefaWindow extends javax.swing.JFrame {
         });
 
         btnAtualizar.setText("Atualizar Status");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +180,10 @@ public class TarefaWindow extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         executor.executeCommand(new ExcluirTarefaGUICommand(tableTarefa));
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        executor.executeCommand(new AtualizarStatusTarefaGUICommand(tableTarefa));
+    }//GEN-LAST:event_btnAtualizarActionPerformed
  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
