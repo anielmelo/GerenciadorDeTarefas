@@ -1,18 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package gui;
 
-/**
- *
- * @author aniel
- */
+import domain.Tarefa;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import repository.UsuarioRepository;
+import service.UsuarioService;
+
 public class BuscarTarefaWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form BuscarTarefaWindow
-     */
+    private final UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
+    
     public BuscarTarefaWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -30,8 +28,8 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtTermo = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -50,11 +48,16 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Buscar tarefa");
 
-        jTextField1.setToolTipText("Digite um termo para buscar");
+        txtTermo.setToolTipText("Digite um termo para buscar");
 
-        jButton1.setText("Buscar");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Termo de busca");
 
@@ -89,9 +92,9 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(139, 139, 139))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1)
+                        .addComponent(txtTermo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -104,8 +107,8 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                 .addContainerGap())
@@ -124,6 +127,10 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        initTable();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,15 +167,35 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
         });
     }
 
+    private void initTable() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Titulo");
+        modelo.addColumn("Descrição");
+        modelo.addColumn("Prioridade");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Prazo");
+        modelo.addColumn("Status");
+        List<Tarefa> tarefas = usuarioService.buscarTarefa(txtTermo.getText());
+        if (tarefas.isEmpty()) {
+            JOptionPane.showMessageDialog(txtTermo.getParent(), "Nenhuma tarefa encontrada!");
+        } else {
+            for (int i = 0; tarefas.size() > i; i++) {
+                modelo.addRow(new String[] {tarefas.get(i).getTitulo(), tarefas.get(i).getDescricao(), tarefas.get(i).getPrioridade(), tarefas.get(i).getCategoria(), tarefas.get(i).getPrazoDeConclusao(), tarefas.get(i).isStatus()?"Concluída":"Pendente"});
+            }
+        }
+        tableTarefa.setModel(modelo);
+        tableTarefa.setDefaultEditor(Object.class, null);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tableTarefa;
+    private javax.swing.JTextField txtTermo;
     // End of variables declaration//GEN-END:variables
 }

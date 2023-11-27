@@ -4,7 +4,6 @@ import commands.CommandExecutor;
 import commands.ExcluirTarefaGUICommand;
 import domain.Tarefa;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import repository.UsuarioRepository;
 import service.UsuarioService;
@@ -38,7 +37,7 @@ public class TarefaWindow extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnUpTable = new javax.swing.JButton();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -74,8 +73,13 @@ public class TarefaWindow extends javax.swing.JFrame {
         btnFiltrar.setText("Filtrar");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
-        btnAtualizar.setText("Atualizar");
+        btnAtualizar.setText("Atualizar Status");
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -84,10 +88,10 @@ public class TarefaWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Atualizar tabela");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnUpTable.setText("Atualizar tabela");
+        btnUpTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnUpTableActionPerformed(evt);
             }
         });
 
@@ -98,10 +102,10 @@ public class TarefaWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
+                            .addComponent(btnUpTable)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCriar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -129,7 +133,7 @@ public class TarefaWindow extends javax.swing.JFrame {
                     .addComponent(btnAtualizar)
                     .addComponent(btnExcluir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUpTable, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -158,24 +162,19 @@ public class TarefaWindow extends javax.swing.JFrame {
         criarTarefa.setVisible(true);
     }//GEN-LAST:event_btnCriarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnUpTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpTableActionPerformed
         initTable();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnUpTableActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        BuscarTarefaWindow busca = new BuscarTarefaWindow();
+        busca.setVisible(true);
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         executor.executeCommand(new ExcluirTarefaGUICommand(tableTarefa));
     }//GEN-LAST:event_btnExcluirActionPerformed
-
-    public int seleciona() {
-        int indice = -1;
-        try {
-            indice = tableTarefa.getSelectedRow();
-        } catch(NullPointerException e) {
-            JOptionPane.showMessageDialog(btnExcluir.getParent(), e);
-        }
-        return indice;
-    }
-    
+ 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -215,7 +214,7 @@ public class TarefaWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFiltrar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnUpTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTable tableTarefa;
