@@ -7,11 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import repository.UsuarioRepository;
 import service.UsuarioService;
 
-public class BuscarTarefaWindow extends javax.swing.JFrame {
+public class FiltrarTarefaWindow extends javax.swing.JFrame {
 
     private final UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
     
-    public BuscarTarefaWindow() {
+    public FiltrarTarefaWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -25,42 +25,24 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        txtTermo = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
+        btnFiltrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableTarefa = new javax.swing.JTable();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        cmbPrioridade = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Buscar tarefa");
 
-        txtTermo.setToolTipText("Digite um termo para buscar");
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                btnFiltrarActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Termo de busca");
+        jLabel2.setText("Prioridade:");
 
         tableTarefa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,6 +62,8 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tableTarefa);
 
+        cmbPrioridade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MÁXIMA", "COMUM", "MÍNIMA" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -89,13 +73,13 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(139, 139, 139))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtTermo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -108,10 +92,10 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTermo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
+                    .addComponent(btnFiltrar)
+                    .addComponent(cmbPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -129,9 +113,9 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
         initTable();
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_btnFiltrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,24 +134,24 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FiltrarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FiltrarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FiltrarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FiltrarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarTarefaWindow().setVisible(true);
+                new FiltrarTarefaWindow().setVisible(true);
             }
         });
     }
-
+    
     private void initTable() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Titulo");
@@ -176,9 +160,9 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
         modelo.addColumn("Categoria");
         modelo.addColumn("Prazo");
         modelo.addColumn("Status");
-        List<Tarefa> tarefas = usuarioService.buscarTarefa(txtTermo.getText());
+        List<Tarefa> tarefas = usuarioService.filtrarTarefa(cmbPrioridade.getItemAt(cmbPrioridade.getSelectedIndex()));
         if (tarefas.isEmpty()) {
-            JOptionPane.showMessageDialog(txtTermo.getParent(), "Nenhuma tarefa encontrada!");
+            JOptionPane.showMessageDialog(cmbPrioridade.getParent(), "Nenhuma tarefa encontrada!");
         } else {
             for (int i = 0; tarefas.size() > i; i++) {
                 modelo.addRow(new String[] {tarefas.get(i).getTitulo(), tarefas.get(i).getDescricao(), tarefas.get(i).getPrioridade(), tarefas.get(i).getCategoria(), tarefas.get(i).getPrazoDeConclusao(), tarefas.get(i).isStatus()?"Concluída":"Pendente"});
@@ -187,16 +171,14 @@ public class BuscarTarefaWindow extends javax.swing.JFrame {
         tableTarefa.setModel(modelo);
         tableTarefa.setDefaultEditor(Object.class, null);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JComboBox<String> cmbPrioridade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable tableTarefa;
-    private javax.swing.JTextField txtTermo;
     // End of variables declaration//GEN-END:variables
 }

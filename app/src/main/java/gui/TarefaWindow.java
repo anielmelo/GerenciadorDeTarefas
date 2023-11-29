@@ -5,6 +5,8 @@ import commands.CommandExecutor;
 import commands.ExcluirTarefaGUICommand;
 import domain.Tarefa;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import repository.UsuarioRepository;
 import service.UsuarioService;
@@ -43,6 +45,7 @@ public class TarefaWindow extends javax.swing.JFrame {
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciador de tarefas");
 
         tableTarefa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,6 +66,7 @@ public class TarefaWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tableTarefa);
 
         btnCriar.setText("Criar");
+        btnCriar.setToolTipText("Clique para criar uma nova tarefa");
         btnCriar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCriarActionPerformed(evt);
@@ -70,10 +74,23 @@ public class TarefaWindow extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.setToolTipText("Selecione uma tarefa da tabela para editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnFiltrar.setText("Filtrar");
+        btnFiltrar.setToolTipText("Clique para filtrar por prioridade");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("Clique para buscar por título ou descrição");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -81,6 +98,7 @@ public class TarefaWindow extends javax.swing.JFrame {
         });
 
         btnAtualizar.setText("Atualizar Status");
+        btnAtualizar.setToolTipText("Selecione uma tarefa da tabela para atualizar o status");
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtualizarActionPerformed(evt);
@@ -88,6 +106,7 @@ public class TarefaWindow extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.setToolTipText("Selecione uma tarefa da tabela para excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -147,7 +166,11 @@ public class TarefaWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void initTable() {
+    public JTable getTable() {
+        return tableTarefa;
+    }
+    
+    public final void initTable() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Titulo");
         modelo.addColumn("Descrição");
@@ -161,6 +184,10 @@ public class TarefaWindow extends javax.swing.JFrame {
         }
         tableTarefa.setModel(modelo);
         tableTarefa.setDefaultEditor(Object.class, null);
+    }
+    
+    public Tarefa getTarefaTable() {
+        return usuarioService.listarTarefa().get(tableTarefa.getSelectedRow());
     }
     
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
@@ -179,11 +206,29 @@ public class TarefaWindow extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         executor.executeCommand(new ExcluirTarefaGUICommand(tableTarefa));
+        initTable();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         executor.executeCommand(new AtualizarStatusTarefaGUICommand(tableTarefa));
+        initTable();
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int indice = tableTarefa.getSelectedRow();
+        if (indice != -1) {
+            EditarTarefaWindow editar = new EditarTarefaWindow(usuarioService.listarTarefa().get(indice));
+            editar.setField(usuarioService.listarTarefa().get(indice));
+            editar.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(btnEditar.getParent(), "Selecione uma tarefa para editar!");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        FiltrarTarefaWindow filtrar = new FiltrarTarefaWindow();
+        filtrar.setVisible(true);
+    }//GEN-LAST:event_btnFiltrarActionPerformed
  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

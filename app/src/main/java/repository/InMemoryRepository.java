@@ -40,9 +40,9 @@ public class InMemoryRepository {
     }
 
     public Tarefa getTarefaEditavel(String nomeUsuario, UUID id) {
-		Optional<Tarefa> tarefaEdit =  getTarefas(nomeUsuario).stream().filter(t -> t.getId().equals(id)).findFirst();
+	Optional<Tarefa> tarefaEdit =  getTarefas(nomeUsuario).stream().filter(t -> t.getId().equals(id)).findFirst();
         return tarefaEdit.isPresent() ? tarefaEdit.get() : null;
-	}
+    }
 
     public void createTarefa(String nomeUsuario, Tarefa tarefa) {
         getTarefas(nomeUsuario).add(tarefa);

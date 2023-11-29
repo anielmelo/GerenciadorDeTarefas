@@ -1,14 +1,20 @@
 package gui;
 
 import commands.CommandExecutor;
-import commands.CriarTarefaGUICommand;
+import commands.EditarTarefaGUICommand;
+import domain.Tarefa;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 
-public class CriarTarefaWindow extends javax.swing.JFrame {
+public class EditarTarefaWindow extends javax.swing.JFrame {
 
+    private final Tarefa tarefaSelecionada;
     CommandExecutor executor = new CommandExecutor();
-    TarefaWindow tarefaWindow = new TarefaWindow();
     
-    public CriarTarefaWindow() {
+    public EditarTarefaWindow(Tarefa tarefa) {
+        this.tarefaSelecionada = tarefa;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -22,7 +28,6 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         fieldTitulo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -30,7 +35,7 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
         boxPrioridade = new javax.swing.JComboBox<>();
         fieldCategoria = new javax.swing.JTextField();
         fieldFormatData = new javax.swing.JFormattedTextField();
-        btnCriar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -39,11 +44,7 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         fieldPrioridade = new javax.swing.JTextField();
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Criar tarefa");
-        setResizable(false);
 
         fieldDescricao.setColumns(20);
         fieldDescricao.setRows(5);
@@ -54,10 +55,10 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
         fieldFormatData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         fieldFormatData.setToolTipText("dd/mm/aaaa");
 
-        btnCriar.setText("Criar");
-        btnCriar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCriarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -119,7 +120,7 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnCriar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -148,7 +149,7 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(fieldPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(btnCriar)
+                        .addComponent(btnEditar)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar))
                     .addComponent(jScrollPane1))
@@ -169,6 +170,39 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sortPrioridade(List<String> opcoes, String prioridade) {
+        Collections.sort(opcoes, (s1, s2) -> {
+            if (s1.equals(prioridade)) {
+                return -1;
+            } else if (s2.equals(prioridade)) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+    
+    public void setField(Tarefa tarefaSelecionada) {
+        fieldTitulo.setText(tarefaSelecionada.getTitulo());
+        fieldDescricao.setText(tarefaSelecionada.getDescricao());
+        
+        // ORGANIZA OS VALORES DE PRIORIDADE
+        List<String> opcoes = new ArrayList<>();
+        opcoes.add("MÁXIMA");
+        opcoes.add("COMUM");
+        opcoes.add("MÍNIMA");
+
+        sortPrioridade(opcoes, tarefaSelecionada.getPrioridade());
+
+        DefaultComboBoxModel<String> modelSortPrioridade = new DefaultComboBoxModel<>();
+        for (String opcao : opcoes) {
+            modelSortPrioridade.addElement(opcao);
+        }
+        boxPrioridade.setModel(modelSortPrioridade);
+        
+        fieldCategoria.setText(tarefaSelecionada.getCategoria());
+        fieldFormatData.setText(tarefaSelecionada.getPrazoDeConclusao());
+    }
+    
     private void clearField() {
         fieldTitulo.setText("");
         fieldDescricao.setText("");
@@ -176,17 +210,20 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
         fieldFormatData.setText("");
     }
     
-    private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
-        executor.executeCommand(new CriarTarefaGUICommand(fieldTitulo, fieldCategoria, fieldDescricao, fieldFormatData, boxPrioridade, this, fieldPrioridade));
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        executor.executeCommand(new EditarTarefaGUICommand(tarefaSelecionada, fieldTitulo, fieldDescricao, boxPrioridade, fieldPrioridade, fieldCategoria, fieldFormatData, this));
         clearField();
         this.dispose();
-    }//GEN-LAST:event_btnCriarActionPerformed
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         clearField();
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -201,20 +238,21 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CriarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CriarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CriarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CriarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarTarefaWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            private Tarefa tarefa;
             public void run() {
-                new CriarTarefaWindow().setVisible(true);
+                new EditarTarefaWindow(tarefa).setVisible(true);
             }
         });
     }
@@ -222,13 +260,12 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> boxPrioridade;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCriar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JTextField fieldCategoria;
     private javax.swing.JTextArea fieldDescricao;
     private javax.swing.JFormattedTextField fieldFormatData;
     private javax.swing.JTextField fieldPrioridade;
     private javax.swing.JTextField fieldTitulo;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
