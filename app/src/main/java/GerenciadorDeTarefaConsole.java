@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 import commands.AtualizarTarefaCommand;
@@ -13,6 +14,8 @@ import commands.LoginCommand;
 import repository.UsuarioRepository;
 import service.UsuarioService;
 
+//Gerenciador de Tarefas 
+//TESTE
 public class GerenciadorDeTarefaConsole {
     private static boolean running = true;
 
