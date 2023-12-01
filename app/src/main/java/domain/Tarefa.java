@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Tarefa implements Serializable {
     
-    private UUID id;
+    private final UUID id;
     private String titulo;
     private String descricao;
     private String prioridade;

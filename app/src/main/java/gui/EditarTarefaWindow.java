@@ -11,8 +11,8 @@ import javax.swing.DefaultComboBoxModel;
 public class EditarTarefaWindow extends javax.swing.JFrame {
 
     private final Tarefa tarefaSelecionada;
+    private final TarefaWindow tarefaWindow;
     CommandExecutor executor = new CommandExecutor();
-    private TarefaWindow tarefaWindow;
     
     public EditarTarefaWindow(Tarefa tarefa, TarefaWindow tarefaWindow) {
         this.tarefaSelecionada = tarefa;

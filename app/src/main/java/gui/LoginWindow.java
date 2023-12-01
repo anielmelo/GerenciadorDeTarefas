@@ -3,17 +3,21 @@ package gui;
 import commands.CadastrarUsuarioGUICommand;
 import commands.CommandExecutor;
 import commands.LoginGUICommand;
+import repository.FileDataService;
 import repository.UsuarioRepository;
 import service.UsuarioService;
 
-public class LoginWindow extends javax.swing.JFrame {
-
-    UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
+public class LoginWindow extends javax.swing.JFrame {    
+    private UsuarioService service;
+    private final UsuarioRepository repository;
     CommandExecutor executor = new CommandExecutor();
     
     public LoginWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
+        repository = UsuarioRepository.getInstance();
+        repository.setRepository(new FileDataService());
+        service = new UsuarioService(repository);
     }
 
     @SuppressWarnings("unchecked")
