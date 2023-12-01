@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import repository.UsuarioRepository;
 import service.UsuarioService;
+import validators.DateValidator;
 import validators.GUITextValidator;
 import validators.NonEmptyValidator;
 
@@ -38,7 +39,6 @@ public class EditarTarefaGUICommand implements Command {
     
     @Override
     public void execute() {
-        // VALIDA OS CAMPOS
         String titulo = txtTitulo.getText();
         String descricao = txtDescricao.getText();
 
@@ -52,7 +52,7 @@ public class EditarTarefaGUICommand implements Command {
         GUITextValidator descricaoValidator = new GUITextValidator(new NonEmptyValidator());
         GUITextValidator prioridadeValidator = new GUITextValidator(new NonEmptyValidator());
         GUITextValidator categoriaValidator = new GUITextValidator(new NonEmptyValidator());
-        GUITextValidator prazoValidator = new GUITextValidator(new NonEmptyValidator());
+        GUITextValidator prazoValidator = new GUITextValidator(new DateValidator());
 
         boolean tituloIsValid = tituloValidator.validate(txtTitulo);
         boolean descricaoIsValid = descricaoValidator.validate(txtDescricao);
