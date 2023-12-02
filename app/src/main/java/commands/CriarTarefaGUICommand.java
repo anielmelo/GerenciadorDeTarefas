@@ -1,8 +1,8 @@
 package commands;
 
+import gui.CriarTarefaWindow;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -14,24 +14,24 @@ import validators.NonEmptyValidator;
 
 public class CriarTarefaGUICommand implements Command {
 
-    private final JFrame frame;
     private final JTextField txtTitulo;
     private final JTextArea txtDescricao;
     private final JComboBox<String> cmbPrioridade;
     private final JTextField txtPrioridade;
     private final JTextField txtCategoria;
     private final JFormattedTextField txtData;
+    private final CriarTarefaWindow criarTarefa;
     
     private final UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
 
-    public CriarTarefaGUICommand(JTextField txtTitulo, JTextField txtCategoria, JTextArea txtDescricao, JFormattedTextField txtData, JComboBox<String> cmbPrioridade, javax.swing.JFrame frame, javax.swing.JTextField txtPrioridade) {
+    public CriarTarefaGUICommand(JTextField txtTitulo, JTextField txtCategoria, JTextArea txtDescricao, JFormattedTextField txtData, JComboBox<String> cmbPrioridade, javax.swing.JTextField txtPrioridade, CriarTarefaWindow criarTarefa) {
         this.txtTitulo = txtTitulo;
         this.txtCategoria = txtCategoria;
         this.txtDescricao = txtDescricao;
         this.txtData = txtData;
         this.cmbPrioridade = cmbPrioridade;
         this.txtPrioridade = txtPrioridade;
-        this.frame = frame;
+        this.criarTarefa = criarTarefa;
     }
     
     @Override
@@ -60,9 +60,10 @@ public class CriarTarefaGUICommand implements Command {
         if (tituloIsValid && descricaoIsValid && prioridadeIsValid && categoriaIsValid && prazoIsValid) {
             usuarioService.criarTarefa(titulo, descricao, prioridade, categoria, prazo);
             JOptionPane.showMessageDialog(txtTitulo.getParent(), "Tarefa criada com sucesso!");
+            criarTarefa.clearField();
+            criarTarefa.dispose();
         } else {
-            JOptionPane.showMessageDialog(txtTitulo.getParent(), "Erro! Tente novamente mais tarde!");
-            frame.dispose();
+            JOptionPane.showMessageDialog(txtTitulo.getParent(), "Erro! Preencha o formulário corretamente!");
         }
     }
 }

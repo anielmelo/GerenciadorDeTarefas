@@ -80,9 +80,11 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
         jLabel5.setText("Categoria");
 
         fieldPrioridade.setEditable(false);
+        fieldPrioridade.setBackground(new java.awt.Color(140, 140, 140));
         fieldPrioridade.setEnabled(false);
         fieldPrioridade.setFocusable(false);
         fieldPrioridade.setOpaque(true);
+        fieldPrioridade.setSelectedTextColor(new java.awt.Color(140, 140, 140));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -170,7 +172,7 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void clearField() {
+    public void clearField() {
         fieldTitulo.setText("");
         fieldDescricao.setText("");
         fieldCategoria.setText("");
@@ -178,10 +180,8 @@ public class CriarTarefaWindow extends javax.swing.JFrame {
     }
     
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
-        executor.executeCommand(new CriarTarefaGUICommand(fieldTitulo, fieldCategoria, fieldDescricao, fieldFormatData, boxPrioridade, this, fieldPrioridade));
-        clearField();
+        executor.executeCommand(new CriarTarefaGUICommand(fieldTitulo, fieldCategoria, fieldDescricao, fieldFormatData, boxPrioridade, fieldPrioridade, this));
         tarefaWindow.initTable();
-        this.dispose();
     }//GEN-LAST:event_btnCriarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

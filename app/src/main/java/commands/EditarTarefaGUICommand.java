@@ -1,9 +1,9 @@
 package commands;
 
 import domain.Tarefa;
+import gui.EditarTarefaWindow;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -15,7 +15,6 @@ import validators.NonEmptyValidator;
 
 public class EditarTarefaGUICommand implements Command {
 
-    private final JFrame frame;
     private final Tarefa tarefaSelecionada;
     private final JTextField txtTitulo;
     private final JTextArea txtDescricao;
@@ -23,10 +22,11 @@ public class EditarTarefaGUICommand implements Command {
     private final JTextField txtPrioridade;
     private final JTextField txtCategoria;
     private final JFormattedTextField txtData;
+    private final EditarTarefaWindow editarTarefa;
     
     private final UsuarioService usuarioService = new UsuarioService(UsuarioRepository.getInstance());
 
-    public EditarTarefaGUICommand(Tarefa tarefa, JTextField txtTitulo, JTextArea txtDescricao, JComboBox<String> cmbPrioridade, JTextField txtPrioridade, JTextField txtCategoria, JFormattedTextField txtData, JFrame frame) {
+    public EditarTarefaGUICommand(Tarefa tarefa, JTextField txtTitulo, JTextArea txtDescricao, JComboBox<String> cmbPrioridade, JTextField txtPrioridade, JTextField txtCategoria, JFormattedTextField txtData, EditarTarefaWindow editarTarefa) {
         this.tarefaSelecionada = tarefa;
         this.txtTitulo = txtTitulo;
         this.txtDescricao = txtDescricao;
@@ -34,7 +34,7 @@ public class EditarTarefaGUICommand implements Command {
         this.txtPrioridade = txtPrioridade;
         this.txtCategoria = txtCategoria;
         this.txtData = txtData;
-        this.frame = frame;
+        this.editarTarefa = editarTarefa;
     }
     
     @Override
@@ -52,7 +52,7 @@ public class EditarTarefaGUICommand implements Command {
         GUITextValidator descricaoValidator = new GUITextValidator(new NonEmptyValidator());
         GUITextValidator prioridadeValidator = new GUITextValidator(new NonEmptyValidator());
         GUITextValidator categoriaValidator = new GUITextValidator(new NonEmptyValidator());
-        GUITextValidator prazoValidator = new GUITextValidator(new DateValidator());
+        GUITextValidator prazoValidator = new GUITextValidator(new NonEmptyValidator());
 
         boolean tituloIsValid = tituloValidator.validate(txtTitulo);
         boolean descricaoIsValid = descricaoValidator.validate(txtDescricao);
@@ -69,9 +69,10 @@ public class EditarTarefaGUICommand implements Command {
             
             usuarioService.atualizarTarefa(tarefaSelecionada.getId(), tarefaSelecionada.getTitulo(), tarefaSelecionada.getDescricao(), tarefaSelecionada.getPrioridade(), tarefaSelecionada.getCategoria(), tarefaSelecionada.getPrazoDeConclusao());
             JOptionPane.showMessageDialog(txtTitulo.getParent(), "Tarefa editada com sucesso!");
+            editarTarefa.clearField();
+            editarTarefa.dispose();
         } else {
-            JOptionPane.showMessageDialog(txtTitulo.getParent(), "Erro! Tente novamente mais tarde!");
-            frame.dispose();
+            JOptionPane.showMessageDialog(txtTitulo.getParent(), "Erro! Preencha o formulário corretamente!");
         }
     }
 }

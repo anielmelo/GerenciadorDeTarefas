@@ -54,7 +54,7 @@ public class UsuarioService {
     }
 
     public void atualizarTarefa(UUID id, String titulo, String descricao, String prioridade, String categoria, String prazo) {
-        repository.updateTarefa(usuarioAtual.getNomeDeUsuario(), new Tarefa(getTarefaID(id).getId(), titulo, descricao, prioridade, categoria, prazo));
+        repository.updateTarefa(usuarioAtual.getNomeDeUsuario(), new Tarefa(getTarefaID(id).getId(), titulo, descricao, prioridade, categoria, prazo, getTarefaID(id).isStatus()));
     }
 
     public List<Tarefa> buscarTarefa(String termo) {

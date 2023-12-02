@@ -82,9 +82,11 @@ public class EditarTarefaWindow extends javax.swing.JFrame {
         jLabel5.setText("Categoria");
 
         fieldPrioridade.setEditable(false);
+        fieldPrioridade.setBackground(new java.awt.Color(140, 140, 140));
         fieldPrioridade.setEnabled(false);
         fieldPrioridade.setFocusable(false);
         fieldPrioridade.setOpaque(true);
+        fieldPrioridade.setSelectedTextColor(new java.awt.Color(140, 140, 140));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,10 +204,12 @@ public class EditarTarefaWindow extends javax.swing.JFrame {
         boxPrioridade.setModel(modelSortPrioridade);
         
         fieldCategoria.setText(tarefaSelecionada.getCategoria());
+        
         fieldFormatData.setText(tarefaSelecionada.getPrazoDeConclusao());
+        fieldFormatData.setEditable(!tarefaSelecionada.isStatus());
     }
     
-    private void clearField() {
+    public void clearField() {
         fieldTitulo.setText("");
         fieldDescricao.setText("");
         fieldCategoria.setText("");
@@ -214,9 +218,7 @@ public class EditarTarefaWindow extends javax.swing.JFrame {
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         executor.executeCommand(new EditarTarefaGUICommand(tarefaSelecionada, fieldTitulo, fieldDescricao, boxPrioridade, fieldPrioridade, fieldCategoria, fieldFormatData, this));
-        clearField();
         tarefaWindow.initTable();
-        this.dispose();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

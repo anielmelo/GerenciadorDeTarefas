@@ -24,14 +24,14 @@ public class Tarefa implements Serializable {
         this.status = false;
     }
     
-    public Tarefa(UUID id, String titulo, String descricao, String prioridade, String categoria, String prazoDeConclusao) {
+    public Tarefa(UUID id, String titulo, String descricao, String prioridade, String categoria, String prazoDeConclusao, boolean status) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.prioridade = prioridade;
         this.categoria = categoria;
         this.prazoDeConclusao = prazoDeConclusao;
-        this.status = false;
+        this.status = status;
     }
 
     public UUID getId() {
