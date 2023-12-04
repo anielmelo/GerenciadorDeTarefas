@@ -33,3 +33,9 @@ tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.jar {
+    manifest {
+        attributes(mapOf("Main-Class" to "gui.LoginWindow"))
+    }
+}
