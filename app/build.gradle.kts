@@ -26,10 +26,16 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("gerenciadordetarefas.App")
+    mainClass.set("gui.LoginWindow")
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+tasks.jar {
+    manifest {
+        attributes(mapOf("Main-Class" to "gui.LoginWindow"))
+    }
 }

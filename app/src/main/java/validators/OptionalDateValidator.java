@@ -6,10 +6,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class DateValidator implements Validator<String> {
- 
+public class OptionalDateValidator implements Validator<String> {
+
     @Override
     public boolean validate(String data) {
+        if (data.equals("")) return true;
+
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             dateFormat.parse(data);
